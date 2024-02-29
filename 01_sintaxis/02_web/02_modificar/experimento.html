@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Experimento</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container p-5">
+    <form class="vstack">
+        <label>Nombre
+            <input id="nombre" type="text">
+        </label>
+        <label id="nombreIncorrecto" class="text-danger d-none" >
+            El nombre tiene que ser entre 3 y 30 caracteres
+        </label>
+        <label>Edad
+            <input id="edad" type="number">
+        </label>
+        <label id="edadIncorrecta" class="text-danger d-none">
+            La edad tiene que ser entre 0 y 90
+        </label>
+        <label>Email
+            <input id="email" type="text">
+        </label>
+        <label id="emailIncorrecto" class="text-danger d-none">
+            La dirección de email tiene que ser valida
+        </label>
+        <button class="btn btn-primary">Validar</button>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function validar(event) {
+
+                event.preventDefault();
+
+                let nombre = document.getElementById("nombre").textContent;
+                let nombreIncorrecto = nombre.length > 30 || nombre.length < 3;
+
+                let edad = document.getElementById("edad").textContent;
+                let edadIncorrecta = edad < 0 || edad > 90;
+
+                let emailValido = /[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}/gm;
+                let email = document.getElementById("email").textContent;
+
+                if (nombreIncorrecto) {
+
+                    let labelNombre = document.getElementById("nombreIncorrecto");
+
+                    labelNombre.classList.remove("d-none");
+                }
+                if (edadIncorrecta) {
+
+                    let labelEdad = document.getElementById("edadIncorrecta");
+
+                    labelEdad.classList.remove("d-none");
+                }
+
+                if (!emailValido.test(email)) {
+                    let labelEmail = document.getElementById("emailIncorrecto");
+
+                    labelEmail.classList.remove("d-none");
+                }
+            }
+
+            const button = document.querySelector("button");
+
+            button.addEventListener("click", validar);
+        });
+    </script>
+</body>
+</html>
